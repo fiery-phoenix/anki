@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-export class Card {
-    id: number;
-    name: string;
-}
+import { Card } from './card';
 @Component({
-selector: 'my-app',
-template: `
+    selector: 'my-app',
+    template: `
         <h1>{{title}}</h1>
         <h2>Available cards</h2>
         <ul class="cards">
@@ -13,14 +10,7 @@ template: `
             <span class="badge">{{card.id}}</span> {{card.name}}
           </li>
         </ul>
-        <div *ngIf="selectedCard">
-            <h2>{{selectedCard.name}} details!</h2>
-            <div><label>id: </label>{{selectedCard.id}}</div>
-            <div>
-                <label>name: </label>
-                <input [(ngModel)]="selectedCard.name" placeholder="name">
-            </div>
-        </div>
+        <card-detail [card]="selectedCard"></card-detail>
     `,
     styles: [`
         .selected {
