@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Card } from './card';
+import { CardService } from './card.service';
+
 @Component({
     selector: 'my-app',
     template: `
@@ -60,27 +62,27 @@ import { Card } from './card';
           margin-right: .8em;
           border-radius: 4px 0 0 4px;
         }
-`]
+    `],
+    providers: [CardService]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'Anki';
     selectedCard:Card;
-    public cards = CARDS;
+    public cards:Card[];
+
+    constructor(private cardService:CardService) {
+    }
+
+    setCards() {
+        this.cardService.getCardsSlowly().then(cards => this.cards = cards);
+    }
+
     onSelect(card) {
         this.selectedCard = card;
     }
-}
 
-const CARDS: Card[] = [
-    { id: 1, name: 'Java' },
-    { id: 2, name: 'JavaScript' },
-    { id: 3, name: 'Scala' },
-    { id: 4, name: 'Akka' },
-    { id: 5, name: 'JUnit' },
-    { id: 6, name: 'Angular' },
-    { id: 7, name: 'Vert.x' },
-    { id: 8, name: 'Hibernate' },
-    { id: 9, name: 'Spring' },
-    { id: 10, name: 'AssertJ' }
-];
+    ngOnInit() {
+        this.setCards();
+    }
+}
