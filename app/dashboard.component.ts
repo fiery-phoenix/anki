@@ -1,7 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
+
+import { Card } from './card';
+import { CardService } from './card.service';
 
 @Component({
     selector: 'cards-dashboard',
-    template: '<h3>Cards Dashboard</h3>'
+    templateUrl: 'app/dashboard.component.html',
+    styleUrls: ['app/dashboard.component.css']
 })
-export class DashboardComponent { }
+export class DashboardComponent implements OnInit {
+
+    cards:Card[];
+
+    constructor(private router: Router, private cardService:CardService) {
+    }
+
+    ngOnInit() {
+        this.cardService.getCards().then(cards => this.cards = cards.slice(0, 4));
+    }
+
+    gotoDetail(card:Card) {
+        this.router.navigate(['/detail', card.id]);
+    }
+}

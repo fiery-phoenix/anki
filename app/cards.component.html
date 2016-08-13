@@ -1,0 +1,10 @@
+<h2>Available cards</h2>
+<ul class="cards">
+    <li *ngFor="let card of cards" [class.selected]="card === selectedCard" (click)="onSelect(card)">
+        <span class="badge">{{card.id}}</span> {{card.name}}
+    </li>
+</ul>
+<div *ngIf="selectedCard">
+    <h2>Selected card is: {{selectedCard.name | uppercase}}</h2>
+    <button (click)="gotoDetail()">View Details</button>
+</div>

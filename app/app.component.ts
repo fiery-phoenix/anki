@@ -5,12 +5,13 @@ import { Component } from '@angular/core'
     template: `
         <h1>{{title}}</h1>
         <nav>
-            <a routerLink="/dashboard">Dashboard</a>
-            <a routerLink="/cards">Cards</a>
+            <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+            <a routerLink="/cards" routerLinkActive="active">Cards</a>
         </nav>
         <router-outlet></router-outlet>
 
-    `
+    `,
+    styleUrls: ['app/app.component.css']
 })
 export class AppComponent {
     title = 'Anki';

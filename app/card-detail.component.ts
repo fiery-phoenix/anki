@@ -1,20 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+
 import { Card } from './card'
+import { CardService } from './card.service';
 
 @Component({
     selector: 'card-detail',
-    template: `
-        <div *ngIf="card">
-            <h2>{{card.name}} details!</h2>
-            <div><label>id: </label>{{card.id}}</div>
-            <div>
-                <label>name: </label>
-                <input [(ngModel)]="card.name" placeholder="name">
-            </div>
-        </div>
-    `
+    templateUrl: 'app/card-detail.component.html',
+    styleUrls: ['app/card-detail.component.css']
 })
-export class CardDetailComponent {
-    @Input()
-    card: Card;
+export class CardDetailComponent implements OnInit {
+
+    card:Card;
+
+    constructor(private cardService:CardService, private route:ActivatedRoute) {
+    }
+
+    ngOnInit() {
+        this.route.params.forEach((params:Params) => {
+            let id = +params['id'];
+            this.cardService.getCard(id).then(card => this.card = card);
+        });
+    }
+
+    goBack() {
+        window.history.back();
+    }
 }
