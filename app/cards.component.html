@@ -2,8 +2,14 @@
 <ul class="cards">
     <li *ngFor="let card of cards" [class.selected]="card === selectedCard" (click)="onSelect(card)">
         <span class="badge">{{card.id}}</span> {{card.name}}
+        <button class="delete-button" (click)="deleteCard(card, $event)">Delete</button>
     </li>
 </ul>
+<div class="error" *ngIf="error">{{error}}</div>
+<button (click)="addCard()">Add New Card</button>
+<div *ngIf="addingCard">
+    <card-detail (close)="close($event)"></card-detail>
+</div>
 <div *ngIf="selectedCard">
     <h2>Selected card is: {{selectedCard.name | uppercase}}</h2>
     <button (click)="gotoDetail()">View Details</button>
